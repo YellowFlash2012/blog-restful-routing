@@ -29,6 +29,10 @@ h6 {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+a.link-danger:hover {
+  color: red;
+}
+
 a {
   color: #212529;
   transition: all 0.2s;
@@ -37,6 +41,7 @@ a {
 a:focus, a:hover {
   color: #0085A1;
 }
+
 
 blockquote {
   font-style: italic;

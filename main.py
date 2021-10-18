@@ -89,9 +89,39 @@ def new_post():
     
     return render_template('make-post.html', form=new_post_form)
 
-@app.route("/edit_post")
-def edit_post():
-    pass
+@app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+def edit_post(post_id):
+    post = BlogPost.query.get(post_id)
+    edit_post_form = CreatePostForm(
+        title=post.title,
+        subtitle=post.subtitle,
+        body=post.body,
+        author=post.author,
+        img_url=post.img_url
+    )
+
+    if edit_post_form.validate_on_submit():
+        post.title = edit_post_form.title.data
+        post.subtitle = edit_post_form.subtitle.data
+        post.body = edit_post_form.body.data
+        post.author = edit_post_form.author.data
+        post.img_url = edit_post_form.img_url.data
+        db.session.commit()
+
+        return redirect(url_for('show_post', index=post.id))
+
+
+    return render_template('make-post.html', form=edit_post_form, is_edit=True)
+
+
+@app.route("/delete/<post_id>")
+def delete(post_id):
+    
+    post_to_delete = BlogPost.query.get(post_id)
+    db.session.delete(post_to_delete)
+    db.session.commit()
+
+    return redirect(url_for('get_all_post'))
 
 @app.route("/about")
 def about():
