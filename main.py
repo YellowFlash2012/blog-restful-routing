@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
@@ -7,6 +7,8 @@ from wtforms.validators import DataRequired, URL
 from flask_ckeditor import CKEditor, CKEditorField
 
 from config import *
+import datetime
+
 
 
 ## Delete this code:
@@ -38,9 +40,9 @@ posts = db.session.query(BlogPost).all()
 
 ##WTForm
 class CreatePostForm(FlaskForm):
-    title = StringField("Blog Post Title", validators=[DataRequired()])
+    title = StringField("Blog Post Title", validators=[DataRequired()], render_kw={'autofocus': True})
     subtitle = StringField("Subtitle", validators=[DataRequired()])
-    author = StringField("Your Name", validators=[DataRequired()])
+    author = StringField("Author", validators=[DataRequired()])
     img_url = StringField("Blog Image URL", validators=[DataRequired(), URL()])
     body = CKEditorField("Blog Content", validators=[DataRequired()])
     submit = SubmitField("Submit Post")
@@ -48,7 +50,7 @@ class CreatePostForm(FlaskForm):
 
 @app.route('/')
 def get_all_posts():
-    
+    posts = BlogPost.query.order_by(BlogPost.id.desc())
     return render_template("index.html", all_posts=posts)
 
 
@@ -61,10 +63,30 @@ def show_post(index):
     return render_template("post.html", post=requested_post)
 
 
-@app.route("/new_post")
+@app.route("/new-post", methods=["GET", "POST"])
 def new_post():
     new_post_form = CreatePostForm()
     new_post_form.validate_on_submit()
+    today = datetime.datetime.now().strftime("%B %d, %Y")
+    # blog_content = new_post_form.body.data('ckeditor')
+    # random_image = 'https://source.unsplash.com/random/450x300'
+
+    if new_post_form.validate_on_submit():
+        new_blog = BlogPost(
+            title=new_post_form.title.data,
+            subtitle=new_post_form.subtitle.data,
+            date=today,
+            body=new_post_form.body.data,
+            author=new_post_form.author.data,
+            img_url=new_post_form.img_url.data
+            
+            )
+        
+        db.session.add(new_blog)
+        db.session.commit()
+
+        return redirect(url_for('get_all_posts'))
+    
     return render_template('make-post.html', form=new_post_form)
 
 @app.route("/edit_post")
@@ -81,5 +103,5 @@ def contact():
     return render_template("contact.html")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
-    # app.run(debug=True)
+    #app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True)

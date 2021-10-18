@@ -24,7 +24,8 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>
-            {{post.body}}
+            <!-- Jinja expression | Jinja filter this is used because the data from the CKEditorField is saved as HTML-->
+            {{post.body | safe}} 
           </p>
            <hr>
            <div class="clearfix">
