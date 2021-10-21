@@ -415,3 +415,14 @@ footer .copyright {
   font-size: 16px;
   padding: 25px 35px;
 }
+
+/* register */
+form.form {
+    width: 60rem;
+    margin: 0rem auto;
+}
+
+.login-form {
+    width: 30rem;
+    margin: 0rem auto;
+}
