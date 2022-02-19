@@ -1,8 +1,4 @@
-/*!
- * Start Bootstrap - Clean Blog v5.0.9 (https://startbootstrap.com/themes/clean-blog)
- * Copyright 2013-2020 Start Bootstrap
- * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-clean-blog/blob/master/LICENSE)
- */
+
 
 body {
   font-size: 20px;
@@ -175,11 +171,16 @@ img::-moz-selection {
 
 header.masthead {
   margin-bottom: 50px;
+  height: 22rem;
   background: no-repeat center center;
   background-color: #868e96;
   background-attachment: scroll;
   position: relative;
   background-size: cover;
+}
+
+div.site-heading h1 {
+  margin-top: -2rem;
 }
 
 header.masthead .overlay {

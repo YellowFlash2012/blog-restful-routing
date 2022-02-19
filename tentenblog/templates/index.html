@@ -20,20 +20,22 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
+        <h1>Welcome</h1>
         {% for post in all_posts %}
         <div class="post-preview">
           <a href="{{ url_for('show_post', index=post.id) }}">
             <h2 class="post-title">
               {{post.title}}
-              {% if current_user.id == "1": %}
+              <!-- admin privilege -->
               <a class="link-danger" href="{{url_for('delete', post_id=post.id)}}">✘</a>
-              {% endif %}
+              
             </h2>
             <h3 class="post-subtitle">
               {{post.subtitle}}
             </h3>
           </a>
           <p class="post-meta">Posted by
+            <!-- changed from post.author to post.author.name to reflect changes after the relational db update -->
             <a href="#">{{post.author}}</a>
             on {{post.date}}</p>
         </div>
@@ -43,9 +45,9 @@
 
         <!-- New Post -->
         <div class="clearfix">
-          {% if current_user.id == "1": %}
+          <!-- admin privilege -->
           <a class="btn btn-primary float-right" href="{{url_for('new_post')}}">Create New Post</a>
-          {% endif %}
+          
         </div>
       </div>
     </div>
