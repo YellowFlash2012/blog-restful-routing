@@ -106,6 +106,7 @@ def show_post(index):
 # @admin_only
 @login_required
 def new_post():
+    logged_in = login_user(current_user)
     new_post_form = CreatePostForm()
     new_post_form.validate_on_submit()
     today = datetime.datetime.now().strftime("%B %d, %Y")
@@ -128,7 +129,7 @@ def new_post():
 
         return redirect(url_for('get_all_posts'))
 
-    return render_template('make-post.html', form=new_post_form)
+    return render_template('make-post.html', form=new_post_form, logged_in=logged_in)
 
 
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])

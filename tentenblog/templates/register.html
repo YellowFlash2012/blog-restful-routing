@@ -1,7 +1,13 @@
 {% include "header.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-
+{% block styling %}
+<style>
+    form.signup-form {
+        width: 20rem;
+    }
+</style>
+{% endblock %}
 
 <header class="masthead"
     style="background-image: url('static/img/register.jpg')">
@@ -18,7 +24,7 @@
     </div>
 </header>
 
-{{ wtf.quick_form(form, novalidate=True) }}
+{{ wtf.quick_form(form, novalidate=True, extra_classes="signup-form", button_map={"submit":"primary"}) }}
 
 
 {% include "footer.html" %}

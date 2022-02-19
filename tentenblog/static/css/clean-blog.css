@@ -315,6 +315,10 @@ header.masthead .post-heading .meta a {
     font-size: 36px;
   }
 }
+
+.login-form {
+  width: 20rem;
+}
 .form-control {
     font-size: 1.2rem;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
